@@ -1,4 +1,4 @@
-package model;
+package model.classes;
 
 public class Episode {
     public int id;
