@@ -1,6 +1,6 @@
 package model.response;
 
-import model.Anime;
+import model.classes.Anime;
 
 import java.util.List;
 

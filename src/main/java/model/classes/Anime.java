@@ -1,4 +1,6 @@
-package model;
+package model.classes;
+
+import java.util.List;
 
 public class Anime {
     public String studio;
@@ -9,10 +11,10 @@ public class Anime {
     public int year;
     public boolean airing;
     public int num_episodes;
-    public String[] genres;
+    public List<Genre> genres;
 
-    public Anime(String studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, String[] genres){
-        this.studio = studio;
+    public Anime(List<Studio> studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, List<Genre> genres){
+        this.studio = studio.get(0).getName();
         this.name = name;
         this.mal_id = jikan_id;
         this.score = score;
@@ -22,7 +24,6 @@ public class Anime {
         this.num_episodes = num_episodes;
         this.genres = genres;
     }
-
     public Anime () {}
 
     public String getStudio() {
@@ -89,24 +90,24 @@ public class Anime {
         this.num_episodes = num_episodes;
     }
 
-    public String[] getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 
-    public void setGenres(String[] genres) {
+    public void setGenres(List<Genre> genres) {
         this.genres = genres;
     }
 
-    public static String animeGenres(String[] genres){
+    public static String animeGenres(List<Genre> genres){
         String all_genres = "";
-        for (String g: genres) all_genres += g + "   ";
+        for (Genre g: genres) all_genres += g + "   ";
         return all_genres;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "%-20s %-10s %-20s %-50s %-20s %-150s %-20s %-10s %-20s %-10s %-20s %-10s %-20s %-5s %-20s %-10s %-20s %-10s %-20s %50s",
+                "%-20s %-50s %-20s %-150s %-20s %-10s %-20s %-10s %-20s %-10s %-20s %-5s %-20s %-10s %-20s %-10s %-20s %50s",
                 "Studio: ", studio + "\n",
                 "Name: ", name + "\n",
                 "Jikan ID: ", mal_id + "\n",
