@@ -1,10 +1,9 @@
 package model;
 
 public class Anime {
-    public int id;
     public String studio;
     public String name;
-    public int jikan_id;
+    public int mal_id;
     public float score;
     public String season;
     public int year;
@@ -12,11 +11,10 @@ public class Anime {
     public int num_episodes;
     public String[] genres;
 
-    public Anime(int id, String studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, String[] genres){
-        this.id = id;
+    public Anime(String studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, String[] genres){
         this.studio = studio;
         this.name = name;
-        this.jikan_id = jikan_id;
+        this.mal_id = jikan_id;
         this.score = score;
         this.season = season;
         this.year = year;
@@ -25,13 +23,7 @@ public class Anime {
         this.genres = genres;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    public Anime () {}
 
     public String getStudio() {
         return studio;
@@ -50,11 +42,11 @@ public class Anime {
     }
 
     public int getJikan_id() {
-        return jikan_id;
+        return mal_id;
     }
 
     public void setJikan_id(int jikan_id) {
-        this.jikan_id = jikan_id;
+        this.mal_id = jikan_id;
     }
 
     public float getScore() {
@@ -115,10 +107,9 @@ public class Anime {
     public String toString() {
         return String.format(
                 "%-20s %-10s %-20s %-50s %-20s %-150s %-20s %-10s %-20s %-10s %-20s %-10s %-20s %-5s %-20s %-10s %-20s %-10s %-20s %50s",
-                "ID: ", id + "\n",
                 "Studio: ", studio + "\n",
                 "Name: ", name + "\n",
-                "Jikan ID: ", jikan_id + "\n",
+                "Jikan ID: ", mal_id + "\n",
                 "Score: ", score + "\n",
                 "Season:", season + "\n",
                 "Year: ", year + "\n",
