@@ -11,7 +11,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-public class JikanClient {
+public class MyAnimeListClient {
     private static final HttpClient client = HttpClient.newHttpClient();
 
     public static void searchAnime (String anime) throws InterruptedException, IOException {
@@ -28,7 +28,7 @@ public class JikanClient {
         String json = response.body();
         Gson gson = new Gson();
         AnimeSearchResponse result = gson.fromJson(json, AnimeSearchResponse.class);
-
     }
+
 
 }
