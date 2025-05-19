@@ -1,43 +1,34 @@
 package model.classes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class Anime {
     public String studio;
+    public List<Studio> studios;
+    @SerializedName("title")
     public String name;
+    @SerializedName("id")
     public int mal_id;
-    public float score;
-    public String season;
-    public int year;
-    public boolean airing;
+    public String status;
+    public SeasonStart start_season;
     public int num_episodes;
     public List<Genre> genres;
     public String genre;
 
-    public Anime(List<Studio> studio, String name, int mal_id, float score, String season, int year, boolean airing, int num_episodes, List<Genre> genres){
-        this.studio = studio.get(0).getName();
-        this.name = name;
-        this.mal_id = mal_id;
-        this.score = score;
-        this.season = season;
-        this.year = year;
-        this.airing = airing;
-        this.num_episodes = num_episodes;
-        this.genres = genres;
-    }
     public Anime () {}
 
-    public Anime(String studio, String name, int mal_id, float score, String season, int year, boolean airing, int num_episodes, String genre){
+    // TODO: falta cambiar el constructor para que le puedas enchufar el año y la season y te haga el objeto SeasonStart, los parametros estan tal cual, cambia solo el constructor
+    public Anime(String studio, String name, int mal_id, String season, int year, int num_episodes, String genre){
         this.studio = studio;
         this.name = name;
         this.mal_id = mal_id;
-        this.score = score;
-        this.season = season;
-        this.year = year;
-        this.airing = airing;
         this.num_episodes = num_episodes;
         this.genre = genre;
     }
+
+    // TODO: no se si te puede llegar a hacer falta getter y setters nuevos, revisalo!
 
     public String getStudio() {
         return studio;
@@ -61,38 +52,6 @@ public class Anime {
 
     public void setMal_id(int mal_id) {
         this.mal_id = mal_id;
-    }
-
-    public float getScore() {
-        return score;
-    }
-
-    public void setScore(float score) {
-        this.score = score;
-    }
-
-    public String getSeason() {
-        return season;
-    }
-
-    public void setSeason(String season) {
-        this.season = season;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public boolean isAiring() {
-        return airing;
-    }
-
-    public void setAiring(boolean airing) {
-        this.airing = airing;
     }
 
     public int getNum_episodes() {
@@ -124,10 +83,6 @@ public class Anime {
                 "Studio: ", studio,
                 "Name: ", name,
                 "API ID: ", mal_id,
-                "Score: ", score,
-                "Season:", season,
-                "Year: ", year,
-                "Airing: ", airing,
                 "Number Episodes: ", num_episodes,
                 "Genres: ", genre);
     }

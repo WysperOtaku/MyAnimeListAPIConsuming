@@ -1,8 +1,10 @@
 package controller;
 
 import exceptions.InvalidEntry;
+import model.classes.TokenInfo;
 import model.connection.MySQLConnection;
 import model.dao.mysql.MySQLAnimeDAO;
+import service.OAuthService;
 import view.View;
 
 import java.sql.Connection;
@@ -14,6 +16,7 @@ public class Main {
     private static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args){
+        TokenInfo token = OAuthService.cargarToken();
         boolean seguir = true;
 
         while (seguir){
