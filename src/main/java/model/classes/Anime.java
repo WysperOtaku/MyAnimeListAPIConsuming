@@ -6,7 +6,7 @@ public class Anime {
     public int id;
     public String studio;
     public String name;
-    public int jikan_id;
+    public int mal_id;
     public float score;
     public String season;
     public int year;
@@ -18,7 +18,7 @@ public class Anime {
     public Anime(List<Studio> studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, List<Genre> genres){
         this.studio = studio.get(0).getName();
         this.name = name;
-        this.jikan_id = jikan_id;
+        this.mal_id = jikan_id;
         this.score = score;
         this.season = season;
         this.year = year;
@@ -26,6 +26,7 @@ public class Anime {
         this.num_episodes = num_episodes;
         this.genres = genres;
     }
+    public Anime () {}
 
     public Anime(int id, String studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, String genre){
         this.id = id;
@@ -57,11 +58,11 @@ public class Anime {
     }
 
     public int getJikan_id() {
-        return jikan_id;
+        return mal_id;
     }
 
     public void setJikan_id(int jikan_id) {
-        this.jikan_id = jikan_id;
+        this.mal_id = jikan_id;
     }
 
     public float getScore() {
