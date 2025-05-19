@@ -3,7 +3,6 @@ package model.classes;
 import java.util.List;
 
 public class Anime {
-    public int id;
     public String studio;
     public String name;
     public int mal_id;
@@ -15,10 +14,10 @@ public class Anime {
     public List<Genre> genres;
     public String genre;
 
-    public Anime(List<Studio> studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, List<Genre> genres){
+    public Anime(List<Studio> studio, String name, int mal_id, float score, String season, int year, boolean airing, int num_episodes, List<Genre> genres){
         this.studio = studio.get(0).getName();
         this.name = name;
-        this.mal_id = jikan_id;
+        this.mal_id = mal_id;
         this.score = score;
         this.season = season;
         this.year = year;
@@ -28,11 +27,10 @@ public class Anime {
     }
     public Anime () {}
 
-    public Anime(int id, String studio, String name, int jikan_id, float score, String season, int year, boolean airing, int num_episodes, String genre){
-        this.id = id;
+    public Anime(String studio, String name, int mal_id, float score, String season, int year, boolean airing, int num_episodes, String genre){
         this.studio = studio;
         this.name = name;
-        this.jikan_id = jikan_id;
+        this.mal_id = mal_id;
         this.score = score;
         this.season = season;
         this.year = year;
@@ -57,12 +55,12 @@ public class Anime {
         this.name = name;
     }
 
-    public int getJikan_id() {
+    public int getMal_id() {
         return mal_id;
     }
 
-    public void setJikan_id(int jikan_id) {
-        this.mal_id = jikan_id;
+    public void setMal_id(int mal_id) {
+        this.mal_id = mal_id;
     }
 
     public float getScore() {
@@ -122,11 +120,10 @@ public class Anime {
     @Override
     public String toString() {
         return String.format(
-                "%-20s %-10s \n%-20s %-50s \n%-20s %-150s \n%-20s %-10s \n%-20s %-10s \n%-20s %-10s \n%-20s %-5s \n%-20s %-10s \n%-20s %-10s \n%-20s %-100s",
-                "ID: ", id,
+                "%-20s %-50s \n%-20s %-150s \n%-20s %-10s \n%-20s %-10s \n%-20s %-10s \n%-20s %-5s \n%-20s %-10s \n%-20s %-10s \n%-20s %-100s",
                 "Studio: ", studio,
                 "Name: ", name,
-                "Jikan ID: ", jikan_id,
+                "API ID: ", mal_id,
                 "Score: ", score,
                 "Season:", season,
                 "Year: ", year,

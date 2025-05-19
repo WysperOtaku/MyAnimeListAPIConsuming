@@ -26,13 +26,22 @@ public class MySQLAnimeDAO implements AnimeDAO {
         pstmt.setInt(1,key);
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()){
-            return new Anime(rs.getInt("anime_id"),rs.getString("studio"),rs.getString("name"),
-                    rs.getInt("jikan_id"),rs.getFloat("score"),rs.getString("season"),
+            return new Anime(rs.getString("studio"),rs.getString("name"),
+                    rs.getInt("mal_id"),rs.getFloat("score"),rs.getString("season"),
                     rs.getInt("year"),rs.getBoolean("airing"),rs.getInt("num_episodes"),rs.getString("gen"));
         }
         else{
             throw new SQLException("La ID introducida no existe en la base de datos.");
         }
+    }
+
+    @Override
+    public ResultSet readAll()throws SQLException {
+        String query = "SELECT s.name AS studio, a.name, a.mal_id, a.score, a.season, a.year, a.airing, a.num_episodes, fun_Genres(a.anime_id) AS genres" +
+                " FROM animes a" +
+                " LEFT JOIN studios s ON a.studio_id = s.studio_id";
+        PreparedStatement pstmt = con.prepareCall(query);
+        return pstmt.executeQuery();
     }
 
     @Override

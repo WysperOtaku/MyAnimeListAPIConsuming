@@ -11,7 +11,7 @@ CREATE PROCEDURE pro_anime_insert(vStudio INT UNSIGNED, vName VARCHAR(150),
 									vSeason ENUM('spring','summer','autumn','winter'), 
                                     vYear YEAR, vAiring BOOLEAN, vNum_episodes INT UNSIGNED)
 BEGIN
-	INSERT INTO animes(studio_id,name,jikan_id,score,season,year,airing,num_episodes) VALUES(vStudio,vName,vJikan,vScore,vSeason,vYear,vAiring,vNum_episodes);
+	INSERT INTO animes(studio_id,name,mal_id,score,season,year,airing,num_episodes) VALUES(vStudio,vName,vJikan,vScore,vSeason,vYear,vAiring,vNum_episodes);
 END
 //
 DELIMITER ;

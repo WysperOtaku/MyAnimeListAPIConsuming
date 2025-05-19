@@ -1,5 +1,9 @@
 package view;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+
 public class View {
     /**
      * Muestra un mensaje
@@ -30,5 +34,29 @@ public class View {
             r += "-";
         }
         System.out.println(r + "\n" + titulo.toUpperCase() + "\n" + r);
+    }
+
+    /**
+     * Agafa el ResultSet de readAll de animes per mostrarlo
+     * @param rs ResultSet
+     * @throws SQLException Excepcio llençada en cas de error amb el ResultSet
+     */
+    public static void mostrarAnimes(ResultSet rs) throws SQLException {
+        ResultSetMetaData md = rs.getMetaData();
+
+        System.out.println(String.format("%-50s %-75s %-10s %-10s %-15s %-10s %-10s %-15s %-100s",
+                md.getColumnLabel(1), md.getColumnLabel(2), md.getColumnLabel(3),
+                md.getColumnLabel(4), md.getColumnLabel(5), md.getColumnLabel(6),
+                md.getColumnLabel(7), md.getColumnLabel(8), md.getColumnLabel(9)));
+
+        while (rs.next()){
+            boolean air;
+            if (Integer.parseInt(rs.getString(7)) == 0) air = false;
+            else air = true;
+            System.out.println(String.format("%-50s %-75s %-10s %-10s %-15s %-10s %-10s %-15s %-100s",
+                    rs.getString(1), rs.getString(2), rs.getString(3),
+                    rs.getString(4), rs.getString(5), rs.getString(6),
+                    air, rs.getString(8), rs.getString(9)));
+        }
     }
 }

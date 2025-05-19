@@ -14,7 +14,7 @@ CREATE TABLE animes(
 	anime_id		INT UNSIGNED AUTO_INCREMENT,
     studio_id 		INT UNSIGNED,
     name 			VARCHAR(150),
-    jikan_id		INT UNSIGNED,
+    mal_id			INT UNSIGNED,
     score			FLOAT,
     season			ENUM("spring","summer","autumn","winter"),
     year			YEAR,

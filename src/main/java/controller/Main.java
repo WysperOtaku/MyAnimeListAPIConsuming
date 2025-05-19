@@ -60,6 +60,8 @@ public class Main {
 
                 switch (opt){
                     case 1:
+                        MySQLAnimeDAO DAOanime = new MySQLAnimeDAO(con);
+                        View.mostrarAnimes(DAOanime.readAll());
                         break;
                     case 2:
                         View.mostrarMsg("Introduce la ID del anime que quires consultar.");
