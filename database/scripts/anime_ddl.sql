@@ -18,21 +18,11 @@ CREATE TABLE animes(
     score			FLOAT,
     season			ENUM("spring","summer","autumn","winter"),
     year			YEAR,
-    airing			BOOLEAN,
+    airing			BOOLEAN DEFAULT false,
     num_episodes	INT UNSIGNED,
     CONSTRAINT pk_animes PRIMARY KEY animes(anime_id),
     CONSTRAINT fk_animes_studios FOREIGN KEY animes(studio_id)
 		REFERENCES studios(studio_id)
-);
-
-CREATE TABLE episodes(
-	episode_id		INT UNSIGNED AUTO_INCREMENT,
-	anime_id		INT UNSIGNED,
-    name 			VARCHAR(50),
-    num_episode		INT UNSIGNED,
-    CONSTRAINT pk_episodes PRIMARY KEY episodes(episode_id),
-    CONSTRAINT fk_episodes_animes FOREIGN KEY episodes(anime_id)
-		REFERENCES animes(anime_id)
 );
 
 CREATE TABLE genres(
