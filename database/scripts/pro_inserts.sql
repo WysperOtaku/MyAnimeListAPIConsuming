@@ -6,7 +6,7 @@ DROP PROCEDURE IF EXISTS pro_genre_insert;
 DROP PROCEDURE IF EXISTS pro_studio_insert;
 
 DELIMITER //
-CREATE PROCEDURE pro_anime_insert(vStudio INT UNSIGNED, vName VARCHAR(150),
+CREATE PROCEDURE pro_anime_insert(vStudio INT UNSIGNED, vName VARCHAR(75),
 									vMal INT UNSIGNED, vSeason ENUM('spring','summer','fall','winter'), 
                                     vYear YEAR, vStatus ENUM("finished_airing","currently_airing","not_yet_aired"),
                                     vNum_episodes INT UNSIGNED)
