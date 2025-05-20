@@ -2,35 +2,45 @@
 
 Para poder buscar la informacion y asi obtener los datos directamente de la api podemos consumir directamente desde esta url.
 
-https://api.jikan.moe/v4/anime/?
-
-Podemo cambiar el "?" por la id que necesitemos para buscar, luego tendremos la informacion en un json del qual obtendremos la informacion parecida al siguiente:
+https://myanimelist.net/clubs.php?cid=13727
 
 ```JSON
 {
-  "data": {
-    "title": "Enen no Shouboutai: San no Shou",
-    "episodes": 12,
-    "airing": true,
-    "score": 7.99,
-    "season": "spring",
-    "year": 2025,
-    "studios": [
-      {
-        "name": "David Production"
-      }
-    ],
-    "genres": [
-      {
-        "name": "Action"
-      },
-      {
-        "name": "Fantasy"
-      },
-      {
-        "name": "Sci-Fi"
-      }
-    ],
-  }
+  "id": 30230,
+  "title": "Diamond no Ace: Second Season",
+  "status": "finished_airing",
+  "genres": [
+    {
+      "id": 4,
+      "name": "Comedy"
+    },
+    {
+      "id": 30,
+      "name": "Sports"
+    },
+    {
+      "id": 23,
+      "name": "School"
+    },
+    {
+      "id": 27,
+      "name": "Shounen"
+    }
+  ],
+  "num_episodes": 51,
+  "start_season": {
+    "year": 2015,
+    "season": "spring"
+  },
+  "studios": [
+    {
+      "id": 10,
+      "name": "Production I.G"
+    },
+    {
+      "id": 11,
+      "name": "Madhouse"
+    }
+  ]
 }
 ```
