@@ -1,5 +1,6 @@
 package controller;
 
+import exceptions.ExistingObject;
 import exceptions.InvalidEntry;
 import model.classes.TokenInfo;
 import model.connection.MySQLConnection;
@@ -41,12 +42,16 @@ public class Main {
                 }
             }
             catch (SQLException e){
+                e.printStackTrace();
                 View.mostrarMsg("No ha sido posible establecer la connexion con la base de datos.");
                 View.mostrarMsg("Finalizando el programa...");
                 seguir = false;
             }
-            catch (InvalidEntry e){
+            catch (InvalidEntry /*| ExistingObject*/ e){
                 View.mostrarMsg(e.getMessage());
+            }
+            catch (NumberFormatException e){
+                View.mostrarMsg("Opcion no valida. Introduce un numero entre las opciones.");
             }
         }
     }

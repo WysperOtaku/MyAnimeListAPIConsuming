@@ -28,7 +28,6 @@ public class Anime {
         this.status = status;
         this.num_episodes = num_episodes;
         this.genre = genre;
-
     }
 
     public String getStudio() {
@@ -37,6 +36,14 @@ public class Anime {
 
     public void setStudio(String studio) {
         this.studio = studio;
+    }
+
+    public List<Studio> getStudios() {
+        return studios;
+    }
+
+    public void setStudios(List<Studio> studios) {
+        this.studios = studios;
     }
 
     public String getName() {
@@ -55,6 +62,22 @@ public class Anime {
         this.mal_id = mal_id;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public SeasonStart getStart_season() {
+        return start_season;
+    }
+
+    public void setStart_season(SeasonStart start_season) {
+        this.start_season = start_season;
+    }
+
     public int getNum_episodes() {
         return num_episodes;
     }
@@ -71,10 +94,12 @@ public class Anime {
         this.genres = genres;
     }
 
-    public static String animeGenres(List<Genre> genres){
-        String all_genres = "";
-        for (Genre g: genres) all_genres += g + "   ";
-        return all_genres;
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     @Override
