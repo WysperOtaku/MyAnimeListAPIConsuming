@@ -13,12 +13,11 @@ CREATE TABLE studios(
 CREATE TABLE animes(
 	anime_id		INT UNSIGNED AUTO_INCREMENT,
     studio_id 		INT UNSIGNED,
-    name 			VARCHAR(150),
+    name 			VARCHAR(75),
     mal_id			INT UNSIGNED,
-    score			FLOAT,
-    season			ENUM("spring","summer","autumn","winter"),
+    season			ENUM("spring","summer","fall","winter"),
     year			YEAR,
-    airing			BOOLEAN DEFAULT false,
+    status          ENUM("finished_airing","currently_airing","not_yet_aired"),
     num_episodes	INT UNSIGNED,
     CONSTRAINT pk_animes PRIMARY KEY animes(anime_id),
     CONSTRAINT fk_animes_studios FOREIGN KEY animes(studio_id)

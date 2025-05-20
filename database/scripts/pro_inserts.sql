@@ -7,11 +7,11 @@ DROP PROCEDURE IF EXISTS pro_studio_insert;
 
 DELIMITER //
 CREATE PROCEDURE pro_anime_insert(vStudio INT UNSIGNED, vName VARCHAR(150),
-									vJikan INT UNSIGNED, vScore FLOAT, 
-									vSeason ENUM('spring','summer','autumn','winter'), 
-                                    vYear YEAR, vAiring BOOLEAN, vNum_episodes INT UNSIGNED)
+									vMal INT UNSIGNED, vSeason ENUM('spring','summer','fall','winter'), 
+                                    vYear YEAR, vStatus ENUM("finished_airing","currently_airing","not_yet_aired"),
+                                    vNum_episodes INT UNSIGNED)
 BEGIN
-	INSERT INTO animes(studio_id,name,mal_id,score,season,year,airing,num_episodes) VALUES(vStudio,vName,vJikan,vScore,vSeason,vYear,vAiring,vNum_episodes);
+	INSERT INTO animes(studio_id,name,mal_id,season,year,status,num_episodes) VALUES(vStudio,vName,vMal,vSeason,vYear,vStatus,vNum_episodes);
 END
 //
 DELIMITER ;

@@ -42,7 +42,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE pro_anime_select(IdAnime INT UNSIGNED)
 BEGIN
-	SELECT a.anime_id, s.name AS studio, a.name, a.mal_id, a.score, a.season, a.year, a.airing, a.num_episodes, fun_Genres(IdAnime) AS gen
+	SELECT s.name AS studio, a.name, a.mal_id, a.season, a.year, a.status, a.num_episodes, fun_Genres(IdAnime) AS gen
 		FROM animes a
         INNER JOIN studios s ON s.studio_id = a.studio_id
 	WHERE a.anime_id = IdAnime;

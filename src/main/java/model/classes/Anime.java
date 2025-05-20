@@ -20,15 +20,16 @@ public class Anime {
     public Anime () {}
 
     // TODO: falta cambiar el constructor para que le puedas enchufar el año y la season y te haga el objeto SeasonStart, los parametros estan tal cual, cambia solo el constructor
-    public Anime(String studio, String name, int mal_id, String season, int year, int num_episodes, String genre){
+    public Anime(String studio, String name, int mal_id, String season, int year,String status, int num_episodes, String genre){
         this.studio = studio;
         this.name = name;
         this.mal_id = mal_id;
+        this.start_season = new SeasonStart(year,season);
+        this.status = status;
         this.num_episodes = num_episodes;
         this.genre = genre;
-    }
 
-    // TODO: no se si te puede llegar a hacer falta getter y setters nuevos, revisalo!
+    }
 
     public String getStudio() {
         return studio;
@@ -79,10 +80,13 @@ public class Anime {
     @Override
     public String toString() {
         return String.format(
-                "%-20s %-50s \n%-20s %-150s \n%-20s %-10s \n%-20s %-10s \n%-20s %-10s \n%-20s %-5s \n%-20s %-10s \n%-20s %-10s \n%-20s %-100s",
+                "%-20s %-50s \n%-20s %-75s \n%-20s %-10s \n%-20s %-15s \n%-20s %-10s \n%-20s %-25s \n%-20s %-10s \n%-20s %-100s",
                 "Studio: ", studio,
                 "Name: ", name,
                 "API ID: ", mal_id,
+                "Season: ", start_season.getSeason(),
+                "Year: ", start_season.getYear(),
+                "Status: ", status,
                 "Number Episodes: ", num_episodes,
                 "Genres: ", genre);
     }
