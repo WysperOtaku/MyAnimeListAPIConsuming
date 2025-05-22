@@ -66,7 +66,7 @@ public class MySQLAnimeDAO implements AnimeDAO {
 
     @Override
     public Anime read(Integer key) throws SQLException {
-        String procedure = "CALL pro_anime_select(?)";
+        String procedure = "CALL pro_anime_select_animeID(?)";
         PreparedStatement pstmt = con.prepareStatement(procedure);
         pstmt.setInt(1,key);
         ResultSet rs = pstmt.executeQuery();

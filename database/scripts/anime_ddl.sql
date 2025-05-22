@@ -20,6 +20,7 @@ CREATE TABLE animes(
     status          ENUM("finished_airing","currently_airing","not_yet_aired"),
     num_episodes	INT UNSIGNED,
     CONSTRAINT pk_animes PRIMARY KEY animes(anime_id),
+	CONSTRAINT uk_mal_id UNIQUE anime(mal_id),
     CONSTRAINT fk_animes_studios FOREIGN KEY animes(studio_id)
 		REFERENCES studios(studio_id)
 );
@@ -41,9 +42,9 @@ CREATE TABLE animes_genres(
 		REFERENCES genres(genre_id)
 );
 
-DROP PROCEDURE IF EXISTS pro_anime_select;
 DROP FUNCTION IF EXISTS fun_Genres;
 
+-- Devuelve un string enorme con todos los generos del anime
 DELIMITER //
 CREATE FUNCTION fun_Genres(IdAnime INT UNSIGNED) RETURNS VARCHAR(500)
 NOT DETERMINISTIC READS SQL DATA
@@ -78,10 +79,13 @@ END
 //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS pro_anime_select_animeID;
+DROP PROCEDURE IF EXISTS pro_anime_select_malID;
 
 
+-- Muestra toda la informacion de un anime dando la ID
 DELIMITER //
-CREATE PROCEDURE pro_anime_select(IdAnime INT UNSIGNED)
+CREATE PROCEDURE pro_anime_select_animeID(IdAnime INT UNSIGNED)
 BEGIN
 	SELECT s.name AS studio, a.name, a.mal_id, a.season, a.year, a.status, a.num_episodes, fun_Genres(IdAnime) AS gen
 		FROM animes a
@@ -91,11 +95,23 @@ END
 //
 DELIMITER ;
 
+-- Muestra la ID de un anime dando la ID de la API
+DELIMITER //
+CREATE PROCEDURE pro_anime_select_malID(IdMal INT UNSIGNED)
+BEGIN
+	SELECT anime_id
+		FROM animes
+	WHERE IdMal = mal_id;
+END
+//
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS pro_anime_insert;
 DROP PROCEDURE IF EXISTS pro_animes_genres_insert;
 DROP PROCEDURE IF EXISTS pro_genre_insert;
 DROP PROCEDURE IF EXISTS pro_studio_insert;
 
+-- Hace un insert a la bbdd pasandole toda la informacion del anime
 DELIMITER //
 CREATE PROCEDURE pro_anime_insert(vStudio INT UNSIGNED, vName VARCHAR(75),
 									vMal INT UNSIGNED, vSeason ENUM('spring','summer','fall','winter'),
@@ -108,7 +124,7 @@ END
 DELIMITER ;
 
 
-
+-- Hace un insert a la bbdd pasandole la id del anime i el genero
 DELIMITER //
 CREATE PROCEDURE pro_animes_genres_insert(vAnime INT UNSIGNED, vGenre INT UNSIGNED)
 BEGIN
@@ -118,7 +134,7 @@ END
 DELIMITER ;
 
 
-
+-- Hace un insert a la bbdd pasandole el nombre del genero
 DELIMITER //
 CREATE PROCEDURE pro_genre_insert(vName VARCHAR(50))
 BEGIN
@@ -128,11 +144,28 @@ END
 DELIMITER ;
 
 
-
+-- Hace un insert a la bbdd pasandole el nombre del estudio
 DELIMITER //
 CREATE PROCEDURE pro_studio_insert(vName VARCHAR(50))
 BEGIN
 	INSERT INTO studios(name) VALUES(vName);
+END
+//
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS pro_anime_update;
+
+DELIMITER //
+CREATE PROCEDURE pro_anime_update(vStudio INT UNSIGNED, vName VARCHAR(75),
+									vMal INT UNSIGNED, vSeason ENUM('spring','summer','fall','winter'),
+                                    vYear YEAR, vStatus ENUM("finished_airing","currently_airing","not_yet_aired"),
+                                    vNum_episodes INT UNSIGNED)
+BEGIN
+	UPDATE animes 
+		SET studio_id = vStudio, name = vName,
+			season = vSeason, year = vYear,
+			status = vStatus, num_episodes = vNum_episodes
+	WHERE mal_id = vMal;
 END
 //
 DELIMITER ;

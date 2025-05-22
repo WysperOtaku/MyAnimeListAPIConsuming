@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class OAuthService {
 
     public static String crearURL() throws IOException {
-        ApiConfig conf = ApiConfig.load("main/resources/config.json");
+        ApiConfig conf = ApiConfig.load("src/main/resources/config.json");
         String url = String.format("https://myanimelist.net/v1/oauth2/authorize?response_type=code&client_id=%s&redirect_uri=%s&code_challenge=%s&code_challenge_method=plain",
                 conf.client_id, URLEncoder.encode(conf.redirect_uri, StandardCharsets.UTF_8), conf.code_challenge);
         return url;
@@ -59,7 +59,7 @@ public class OAuthService {
     public static TokenInfo intercambiarCodePorToken (String code) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
-        ApiConfig conf = ApiConfig.load("main/resources/config.json");
+        ApiConfig conf = ApiConfig.load("src/main/resources/config.json");
         String body = String.format(
                 "grant_type=authorization_code&code=%s&redirect_uri=%s&client_id=%s&code_verifier=%s",
                 URLEncoder.encode(code, StandardCharsets.UTF_8),
@@ -79,7 +79,7 @@ public class OAuthService {
     }
 
     public static TokenInfo refrescarToken(TokenInfo token) throws IOException, InterruptedException {
-        ApiConfig conf = ApiConfig.load("main/resources/config.json");
+        ApiConfig conf = ApiConfig.load("src/main/resources/config.json");
         HttpClient client = HttpClient.newHttpClient();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -97,7 +97,7 @@ public class OAuthService {
     }
 
     public static TokenInfo cargarToken() {
-        try (FileReader reader = new FileReader("main/resources/token.json")) {
+        try (FileReader reader = new FileReader("src/main/resources/token.json")) {
             JsonObject json = new JsonParser().parse(reader).getAsJsonObject();
             String accessToken = json.get("access_token").getAsString();
             String refreshToken = json.get("refresh_token").getAsString();
@@ -112,14 +112,14 @@ public class OAuthService {
     }
 
     public static void guardarToken(TokenInfo token) throws IOException {
-        try (FileWriter writer = new FileWriter("main/resources/token.json")) {
+        try (FileWriter writer = new FileWriter("src/main/resources/token.json")) {
             new Gson().toJson(token, writer);
         }
     }
 
     public static void actualizarTokenFile(TokenInfo token) {
         try {
-            File a = new File("main/resources/config.json");
+            File a = new File("src/main/resources/config.json");
             a.delete();
             OAuthService.guardarToken(OAuthService.refrescarToken(token));
         } catch (IOException | InterruptedException e) {

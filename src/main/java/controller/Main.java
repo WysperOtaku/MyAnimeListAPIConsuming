@@ -1,15 +1,19 @@
 package controller;
 
+import api.MyAnimeListClient;
 import exceptions.ExistingObject;
 import exceptions.InvalidEntry;
+import model.classes.Anime;
 import model.classes.TokenInfo;
 import model.connection.MySQLConnection;
 import model.dao.mysql.MySQLAnimeDAO;
 import service.OAuthService;
 import view.View;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -35,6 +39,10 @@ public class Main {
                 if (opcion < 1 || opcion > 4) throw new InvalidEntry("La opcion introducida no existe.");
                 switch (opcion){
                     case 1:
+                        MyAnimeListClient myAnimeListClient = new MyAnimeListClient();
+                        List<Anime> animes = myAnimeListClient.getTopAnimes();
+                        MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(connection);
+                        for (Anime a: animes) animeDAO.create(a);
                         break;
                     case 2:
                         break;
@@ -52,8 +60,11 @@ public class Main {
                 View.mostrarMsg("Finalizando el programa...");
                 seguir = false;
             }
-            catch (InvalidEntry /*| ExistingObject*/ e){
+            catch (InvalidEntry | IOException | ExistingObject e){
                 View.mostrarMsg(e.getMessage());
+            }
+            catch (InterruptedException e){
+                View.mostrarMsg("Ha habido un error en la peticion HTTP.");
             }
             catch (NumberFormatException e){
                 View.mostrarMsg("Opcion no valida. Introduce un numero entre las opciones.");
