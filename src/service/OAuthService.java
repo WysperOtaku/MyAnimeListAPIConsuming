@@ -8,10 +8,7 @@ import com.sun.net.httpserver.HttpServer;
 import model.classes.TokenInfo;
 import view.View;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -19,6 +16,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 
 public class OAuthService {
 
@@ -51,7 +49,7 @@ public class OAuthService {
             server.stop(1);
         });
         server.start();
-        View.mostrarMsg("Esperando redireccion a http://localhost:8080/callback");
+        View.mostrarMsg("Esperando redireccion a http://localhost:8080/callback...");
         while (codeContainer[0] == null) {
             try { Thread.sleep(500); } catch (InterruptedException e) {}
         }
@@ -113,10 +111,56 @@ public class OAuthService {
         }
     }
 
-    public void guardarToken(TokenInfo token) throws IOException {
+    public static void guardarToken(TokenInfo token) throws IOException {
         try (FileWriter writer = new FileWriter("main/resources/token.json")) {
             new Gson().toJson(token, writer);
         }
     }
 
+    public static void actualizarTokenFile(TokenInfo token) {
+        try {
+            File a = new File("main/resources/config.json");
+            a.delete();
+            OAuthService.guardarToken(OAuthService.refrescarToken(token));
+        } catch (IOException | InterruptedException e) {
+            View.mostrarMsg("No se pudo guardar el token.json: " + e.getMessage());
+        }
+    }
+
+    public static boolean comprovarToken (TokenInfo token) {
+        boolean seguir = true;
+        Scanner scan = new Scanner(System.in);
+        if (token == null) {
+            View.mostrarMsg("Token no existente!");
+            View.mostrarMsg("Porfavor, siga las instrucciones para poder continuar con el funcionamiento del programa:");
+            View.mostrarMsg("Comprueve que el archivo config.json en /resources/ esta configurado correctamente!");
+            String input;
+            View.mostrarMsg("Continuar?(Y/n)");
+            input = scan.nextLine();
+            if (input.equalsIgnoreCase("N")) {
+                seguir = false;
+                return seguir;
+            }
+            View.mostrarMsg("Perfecto, por favor, copie esta URL en su navegador y autorice su apliacion:");
+            try {
+                View.mostrarMsg(OAuthService.crearURL());
+            }
+            catch (IOException e) {
+                View.mostrarMsg("Hubo un problema al cargar el fichero config,json, por favor, comprueve que este todo correcto ERROR: " + e.getMessage());
+                seguir = false;
+                return seguir;
+            }
+            View.mostrarMsg("Intercambio del codigo del callback por el token inciado");
+            try{
+                OAuthService.guardarToken(OAuthService.intercambiarCodePorToken(OAuthService.esperarCode()));
+                return seguir;
+            }
+            catch (IOException | InterruptedException e) {
+                View.mostrarMsg(e.getMessage());
+                seguir = false;
+                return seguir;
+            }
+        }
+        return seguir;
+    }
 }
