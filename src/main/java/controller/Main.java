@@ -42,7 +42,6 @@ public class Main {
                 }
             }
             catch (SQLException e){
-                e.printStackTrace();
                 View.mostrarMsg("No ha sido posible establecer la connexion con la base de datos.");
                 View.mostrarMsg("Finalizando el programa...");
                 seguir = false;

@@ -1,0 +1,18 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_myanimelist
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: bloste_myanimelist
+      MYSQL_DATABASE: anime_db
+      MYSQL_USER: permatrago
+      MYSQL_PASSWORD: bloste_myanimelist
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/scripts:/docker-entrypoint-initdb.d
+
+volumes:
+  mysql_data:

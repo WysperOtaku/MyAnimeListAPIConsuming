@@ -1,5 +1,3 @@
-USE anime_db;
-
 CALL pro_studio_insert("a");
 CALL pro_studio_insert("b");
 CALL pro_studio_insert("c");
