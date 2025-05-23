@@ -58,22 +58,25 @@ public class OAuthService {
 
     public static TokenInfo intercambiarCodePorToken (String code) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        View.mostrarMsg(code);
 
         ApiConfig conf = ApiConfig.load("src/main/resources/config.json");
         String body = String.format(
-                "grant_type=authorization_code&code=%s&redirect_uri=%s&client_id=%s&code_verifier=%s",
+                "client_id=%s&client_secret=%s&grant_type=authorization_code&code=%s&redirect_uri=%s&code_verifier=%s",
+                conf.client_id,
+                conf.client_secret,
                 URLEncoder.encode(code, StandardCharsets.UTF_8),
                 URLEncoder.encode(conf.redirect_uri, StandardCharsets.UTF_8),
-                conf.client_id,
                 conf.code_challenge);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://myanimelist.net/v1/oauth2/token"))
-                .header("Content-Type", "application/x-fom-urlencoded")
+                .header("Content-Type", "application/x-www-form-urlencoded")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        View.mostrarMsg(response.body());
         Gson gson = new Gson();
         TokenInfo token = gson.fromJson(response.body(), TokenInfo.class);
         View.mostrarMsg(token.toString());

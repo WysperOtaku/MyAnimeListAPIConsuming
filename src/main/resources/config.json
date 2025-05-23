@@ -1,6 +1,6 @@
 {
-  "client_id": "TU_CLIENT_ID_AQUI_PORFAVOR",
-  "client_secret": "TU_CLIENT_SECRET_AQUI_PORFAVOR",
+  "client_id": "38df06c9c82e90272deca4f78829d008",
+  "client_secret": "42e121f55bd0b8c902d28eaa5c7c482f26e1766ad24627b0c231506b00fdf4b8",
   "redirect_uri": "http://localhost:8080/callback",
   "code_challenge": "12345678901234567890123456789012345678901234567890"
 }
