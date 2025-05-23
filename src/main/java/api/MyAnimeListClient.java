@@ -25,7 +25,7 @@ public class MyAnimeListClient {
     }
 
     public List<Anime> getTopAnimes () throws IOException, InterruptedException {
-        String endpoint = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=all&limit=100";
+        String endpoint = "https://api.myanimelist.net/v2/anime/ranking?ranking_type=all&limit=100&fields=status,start_season,num_episodes,genres,studios";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .header("Authorization", "Bearer " + token.getAccess_token())
