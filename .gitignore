@@ -77,3 +77,5 @@ bin/
 
 # Archivos de volúmenes y configuraciones locales de Docker
 /mysql_data/
+
+/src/main/resources/token.json
