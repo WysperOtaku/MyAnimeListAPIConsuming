@@ -49,6 +49,7 @@ public class MyAnimeListClient {
         List<Anime> animes = new ArrayList<>();
         for (AnimeWrapper anime : animeResponse.getData()) {
             animes.add(anime.node);
+
         }
 
         return animes;
