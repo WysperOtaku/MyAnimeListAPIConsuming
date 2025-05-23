@@ -23,11 +23,15 @@ public class Main {
     public static void main(String[] args){
         TokenInfo token = OAuthService.cargarToken();
         boolean seguir = true;
+
         if (!OAuthService.comprovarToken(token)) {
             seguir = false;
+        } else {
+            token = OAuthService.cargarToken();
         }
-        else if (token.isExpired()) {
-           OAuthService.actualizarTokenFile(token);
+
+        if (seguir && token.isExpired()) {
+            OAuthService.actualizarTokenFile(token);
         }
 
         while (seguir){
