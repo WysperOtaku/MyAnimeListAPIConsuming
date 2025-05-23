@@ -75,7 +75,9 @@ public class OAuthService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         Gson gson = new Gson();
-        return gson.fromJson(response.body(), TokenInfo.class);
+        TokenInfo token = gson.fromJson(response.body(), TokenInfo.class);
+        View.mostrarMsg(token.toString());
+        return token;
     }
 
     public static TokenInfo refrescarToken(TokenInfo token) throws IOException, InterruptedException {

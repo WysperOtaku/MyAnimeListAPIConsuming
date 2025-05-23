@@ -3,7 +3,6 @@ package api;
 import com.google.gson.Gson;
 import model.classes.Anime;
 import model.classes.TokenInfo;
-import model.dao.mysql.MySQLAnimeDAO;
 import model.response.AnimeSearchResponse;
 import model.response.AnimeWrapper;
 import service.OAuthService;

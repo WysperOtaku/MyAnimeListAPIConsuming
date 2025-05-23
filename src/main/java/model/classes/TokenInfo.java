@@ -62,4 +62,14 @@ public class TokenInfo {
     public void setObtained_at(long obtained_at) {
         this.obtained_at = obtained_at;
     }
+
+    @Override
+    public String toString() {
+        return "TokenInfo{" +
+                "access_token='" + access_token + '\'' +
+                ", refresh_token='" + refresh_token + '\'' +
+                ", expires_in=" + expires_in +
+                ", obtained_at=" + obtained_at +
+                '}';
+    }
 }
