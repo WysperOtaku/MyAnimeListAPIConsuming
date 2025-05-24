@@ -1,18 +1,24 @@
 package controller;
 
 import api.MyAnimeListClient;
+import com.google.gson.Gson;
 import exceptions.ExistingObject;
 import exceptions.InvalidEntry;
 import model.classes.Anime;
 import model.classes.TokenInfo;
 import model.connection.MySQLConnection;
 import model.dao.mysql.MySQLAnimeDAO;
+import model.response.AnimeSearchResponse;
+import model.response.AnimeWrapper;
 import service.OAuthService;
 import view.View;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,9 +52,24 @@ public class Main {
                         View.mostrarMenu("Copia completa", "Copia parcial");
                         int copia = Integer.parseInt(scan.nextLine());
                         if (copia < 1 || copia > 3) throw new InvalidEntry("La opcion introducida no existe.");
-                        insertsupdatesAPI(connection,copia);
+                        MyAnimeListClient client = new MyAnimeListClient();
+                        insertsupdatesAPI(connection,copia, client.getTopAnimesFromEndopoint());
                         break;
                     case 2:
+                        View.mostrarMenu("Copia completa", "Copia parcial");
+                        int copia2 = Integer.parseInt(scan.nextLine());
+                        if (copia2 < 1 || copia2 > 3) throw new InvalidEntry("La opcion introducida no existe.");
+                        MyAnimeListClient client2 = new MyAnimeListClient();
+                        client2.getTopAnimesToJson();
+                        FileReader reader = new FileReader("src/main/resources/animes.json");
+                        Gson gson = new Gson();
+                        AnimeSearchResponse animeResponse = gson.fromJson(reader, AnimeSearchResponse.class);
+                        List<Anime> animes = new ArrayList<>();
+                        for (AnimeWrapper anime : animeResponse.getData()) {
+                            animes.add(anime.node);
+
+                        }
+                        insertsupdatesAPI(connection, copia2, animes);
                         break;
                     case 3:
                         consultesMenu(connection);
@@ -76,11 +97,8 @@ public class Main {
         }
     }
 
-    private static void insertsupdatesAPI(Connection con, int copia) throws IOException, InterruptedException, SQLException{
-        MyAnimeListClient myAnimeListClient = new MyAnimeListClient();
-        List<Anime> animes = myAnimeListClient.getTopAnimes();
+    private static void insertsupdatesAPI(Connection con, int copia, List<Anime> animes) throws IOException, InterruptedException, SQLException{
         MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(con);
-
         while (true){
             switch (copia){
                 case 1:
