@@ -4,8 +4,7 @@ import api.MyAnimeListClient;
 import com.google.gson.Gson;
 import exceptions.ExistingObject;
 import exceptions.InvalidEntry;
-import model.classes.Anime;
-import model.classes.TokenInfo;
+import model.classes.*;
 import model.connection.MySQLConnection;
 import model.dao.mysql.MySQLAnimeDAO;
 import model.response.AnimeSearchResponse;
@@ -99,27 +98,14 @@ public class Main {
 
     private static void insertsupdatesAPI(Connection con, int copia, List<Anime> animes) throws IOException, InterruptedException, SQLException{
         MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(con);
+
         while (true){
             switch (copia){
                 case 1:
-                    for (Anime a: animes){
-                        try {
-                            animeDAO.create(a,true);
-                        }
-                        catch (ExistingObject e){
-                            View.mostrarMsg(e.getMessage());
-                        }
-                    }
+                    for (Anime a: animes) animeDAO.create(a,true);
                     return;
                 case 2:
-                    for (Anime a: animes){
-                        try {
-                            animeDAO.create(a,false);
-                        }
-                        catch (ExistingObject e){
-                            View.mostrarMsg(e.getMessage());
-                        }
-                    }
+                    for (Anime a: animes) animeDAO.create(a,false);
                     return;
                 case 3:
                     View.mostrarMsg("Volviendo al menu principal...");

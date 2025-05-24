@@ -21,7 +21,7 @@ public class MySQLAnimeDAO implements AnimeDAO {
     }
 
     @Override
-    public void create(Anime o, boolean copia) throws SQLException, ExistingObject {
+    public void create(Anime o, boolean copia) throws SQLException {
         //Cojer el estudio i insertarlo a estudios si no existe
         MySQLStudioDAO studioDAO = new MySQLStudioDAO(con);
         int studio_id = studioDAO.insertStudio(new Studio(o.getStudios().getFirst().getName().trim().toLowerCase()));
@@ -50,7 +50,9 @@ public class MySQLAnimeDAO implements AnimeDAO {
             pstmt.setInt(5,o.getStart_season().getYear());
             pstmt.setString(6,o.getStatus());
             pstmt.setInt(7,o.getNum_episodes());
-            pstmt.execute();
+
+            try {pstmt.execute();}
+            catch (SQLException e) {return;}
 
             //Cojer la id del anime que se acaba de introducir
             String query = "SELECT anime_id FROM animes WHERE name = ?";

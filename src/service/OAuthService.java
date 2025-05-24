@@ -58,7 +58,6 @@ public class OAuthService {
 
     public static TokenInfo intercambiarCodePorToken (String code) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
-        View.mostrarMsg(code);
 
         ApiConfig conf = ApiConfig.load("src/main/resources/config.json");
         String body = String.format(
@@ -76,10 +75,8 @@ public class OAuthService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        View.mostrarMsg(response.body());
         Gson gson = new Gson();
         TokenInfo token = gson.fromJson(response.body(), TokenInfo.class);
-        View.mostrarMsg(token.toString());
         return token;
     }
 
