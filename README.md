@@ -33,22 +33,22 @@ Antes de comenzar, asegúrate de contar con lo siguiente:
 
 Para ejecutar esta aplicación, **cada usuario debe crear su propia aplicación en MyAnimeList**.
 
-1. Crea una cuenta (o inicia sesión) en [MyAnimeList](https://myanimelist.net/login.php?from=%2F&)  
+1. Crea una cuenta (o inicia sesión) en [MyAnimeList](img/appform.png)
 2. Una vez dentro, accede a las preferencias de tu cuenta:
 
-   ![preferences](https://github.com/WysperOtaku/MyAnimeListAPIConsuming/img/preferences.png)
+   ![preferences](img/preferences.png)
 
 3. Dirígete a la sección **API** y haz clic en **Create ID**:
 
-   ![create app](https://github.com/WysperOtaku/MyAnimeListAPIConsuming/img/createapp.png)
+   ![create app](img/createapp.png)
 
 4. Rellena el formulario de creación de aplicación. Puedes usar los valores que prefieras, aunque te recomendamos algo similar a esto para facilitar las pruebas:
 
-   ![form](https://github.com/WysperOtaku/MyAnimeListAPIConsuming/img/appform.png)
+   ![form](img/appform.png)
 
 5. Una vez creada, **guarda bien tu `client_id` y `client_secret`**, ya que los necesitarás:
 
-   ![client_id](https://github.com/WysperOtaku/MyAnimeListAPIConsuming/img/client_id.png)
+   ![client_id](img/client_id.png)
 
 ---
 
