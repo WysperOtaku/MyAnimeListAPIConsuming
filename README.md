@@ -73,6 +73,12 @@ Rellena los campos client_id y client_secret con los valores obtenidos al crear 
 El campo code_challenge puede ser el de ejemplo, aunque se recomienda generar uno propio de al menos 43 caracteres.
 
 ### ▶️ Ejecución de la aplicación
+
+Primero por favor, levanta el contenedor de Docker🐳 de nuestra base de datos desde la raiz del proyecto
+```bash
+docker compose up -d
+```
+
 Una vez configurado el config.json, puedes ejecutar la aplicación desde tu IDE o por terminal con Maven:
 
 ```bash
