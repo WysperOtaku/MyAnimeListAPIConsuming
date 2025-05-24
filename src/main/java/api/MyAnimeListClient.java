@@ -85,7 +85,7 @@ public class MyAnimeListClient {
     }
 
     public Anime getAnimeFromEndpoint(int id) throws IOException, InterruptedException {
-        String endpoint = "https://api.myanimelist.net/v2/anime/" + id;
+        String endpoint = "https://api.myanimelist.net/v2/anime/" + id + "?fields=status,start_season,num_episodes,genres,studios";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .header("Authorization", "Bearer " + token.getAccess_token())
@@ -109,7 +109,7 @@ public class MyAnimeListClient {
     }
 
     public void getAnimeToJson(int id) throws IOException, InterruptedException {
-        String endpoint = "https://api.myanimelist.net/v2/anime/" + id;
+        String endpoint = "https://api.myanimelist.net/v2/anime/" + id + "?fields=status,start_season,num_episodes,genres,studios";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(endpoint))
                 .header("Authorization", "Bearer " + token.access_token)
@@ -134,5 +134,9 @@ public class MyAnimeListClient {
         FileWriter writer = new FileWriter("src/main/resources/anime.json");
         writer.write(response.body().toString());
         writer.close();
+    }
+
+    public void closeClient(){
+        client.close();
     }
 }

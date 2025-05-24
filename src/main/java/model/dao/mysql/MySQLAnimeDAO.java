@@ -1,6 +1,5 @@
 package model.dao.mysql;
 
-import exceptions.ExistingObject;
 import model.classes.Anime;
 import model.classes.Genre;
 import model.classes.Studio;

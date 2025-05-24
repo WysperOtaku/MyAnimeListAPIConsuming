@@ -105,6 +105,7 @@ public class OAuthService {
             String refreshToken = json.get("refresh_token").getAsString();
             long expiresIn = json.get("expires_in").getAsLong();
             long obtained_at = json.get("obtained_at").getAsLong();
+            reader.close();
             return new TokenInfo(accessToken, refreshToken, expiresIn, obtained_at);
         }
         catch (IOException e) {

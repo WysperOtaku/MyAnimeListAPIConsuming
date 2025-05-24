@@ -102,6 +102,12 @@ public class Anime {
         this.genre = genre;
     }
 
+    public static String animeGenres(List<Genre> genres){
+        String all_genres = "";
+        for (Genre g: genres) all_genres += g.getName() + "   ";
+        return all_genres;
+    }
+
     @Override
     public String toString() {
         return String.format(
@@ -114,5 +120,17 @@ public class Anime {
                 "Status: ", status,
                 "Number Episodes: ", num_episodes,
                 "Genres: ", genre);
+    }
+
+    public String toStringConsume(){
+        return String.format("%-20s %-50s \n%-20s %-75s \n%-20s %-10s \n%-20s %-15s \n%-20s %-10s \n%-20s %-25s \n%-20s %-10s \n%-20s %-100s",
+                "Studio: ", studios.getFirst().getName(),
+                "Name: ", name,
+                "API ID: ", mal_id,
+                "Season: ", start_season.getSeason(),
+                "Year: ", start_season.getYear(),
+                "Status: ", status,
+                "Number Episodes: ", num_episodes,
+                "Genres: ", animeGenres(genres));
     }
 }
