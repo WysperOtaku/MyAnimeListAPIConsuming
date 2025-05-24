@@ -1,10 +1,8 @@
 package controller;
 
 import api.MyAnimeListClient;
-import exceptions.ExistingObject;
 import exceptions.InvalidEntry;
-import model.classes.Anime;
-import model.classes.TokenInfo;
+import model.classes.*;
 import model.connection.MySQLConnection;
 import model.dao.mysql.MySQLAnimeDAO;
 import service.OAuthService;
@@ -13,6 +11,7 @@ import view.View;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -84,24 +83,10 @@ public class Main {
         while (true){
             switch (copia){
                 case 1:
-                    for (Anime a: animes){
-                        try {
-                            animeDAO.create(a,true);
-                        }
-                        catch (ExistingObject e){
-                            View.mostrarMsg(e.getMessage());
-                        }
-                    }
+                    for (Anime a: animes) animeDAO.create(a,true);
                     return;
                 case 2:
-                    for (Anime a: animes){
-                        try {
-                            animeDAO.create(a,false);
-                        }
-                        catch (ExistingObject e){
-                            View.mostrarMsg(e.getMessage());
-                        }
-                    }
+                    for (Anime a: animes) animeDAO.create(a,false);
                     return;
                 case 3:
                     View.mostrarMsg("Volviendo al menu principal...");
