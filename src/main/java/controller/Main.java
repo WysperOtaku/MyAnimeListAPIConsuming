@@ -23,11 +23,15 @@ public class Main {
     public static void main(String[] args){
         TokenInfo token = OAuthService.cargarToken();
         boolean seguir = true;
+
         if (!OAuthService.comprovarToken(token)) {
             seguir = false;
+        } else {
+            token = OAuthService.cargarToken();
         }
-        else if (token.isExpired()) {
-           OAuthService.actualizarTokenFile(token);
+
+        if (seguir && token.isExpired()) {
+            OAuthService.actualizarTokenFile(token);
         }
 
         while (seguir){
@@ -39,10 +43,10 @@ public class Main {
                 if (opcion < 1 || opcion > 4) throw new InvalidEntry("La opcion introducida no existe.");
                 switch (opcion){
                     case 1:
-                        MyAnimeListClient myAnimeListClient = new MyAnimeListClient();
-                        List<Anime> animes = myAnimeListClient.getTopAnimesFromEndopoint();
-                        MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(connection);
-                        for (Anime a: animes) animeDAO.create(a);
+                        View.mostrarMenu("Copia completa", "Copia parcial");
+                        int copia = Integer.parseInt(scan.nextLine());
+                        if (copia < 1 || copia > 3) throw new InvalidEntry("La opcion introducida no existe.");
+                        insertsupdatesAPI(connection,copia);
                         break;
                     case 2:
                         break;
@@ -60,7 +64,7 @@ public class Main {
                 View.mostrarMsg("Finalizando el programa...");
                 seguir = false;
             }
-            catch (InvalidEntry | IOException | ExistingObject e){
+            catch (InvalidEntry | IOException e){
                 View.mostrarMsg(e.getMessage());
             }
             catch (InterruptedException e){
@@ -68,6 +72,40 @@ public class Main {
             }
             catch (NumberFormatException e){
                 View.mostrarMsg("Opcion no valida. Introduce un numero entre las opciones.");
+            }
+        }
+    }
+
+    private static void insertsupdatesAPI(Connection con, int copia) throws IOException, InterruptedException, SQLException{
+        MyAnimeListClient myAnimeListClient = new MyAnimeListClient();
+        List<Anime> animes = myAnimeListClient.getTopAnimes();
+        MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(con);
+
+        while (true){
+            switch (copia){
+                case 1:
+                    for (Anime a: animes){
+                        try {
+                            animeDAO.create(a,true);
+                        }
+                        catch (ExistingObject e){
+                            View.mostrarMsg(e.getMessage());
+                        }
+                    }
+                    return;
+                case 2:
+                    for (Anime a: animes){
+                        try {
+                            animeDAO.create(a,false);
+                        }
+                        catch (ExistingObject e){
+                            View.mostrarMsg(e.getMessage());
+                        }
+                    }
+                    return;
+                case 3:
+                    View.mostrarMsg("Volviendo al menu principal...");
+                    return;
             }
         }
     }

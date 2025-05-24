@@ -21,14 +21,7 @@ public class MySQLAnimeDAO implements AnimeDAO {
     }
 
     @Override
-    public void create(Anime o) throws SQLException, ExistingObject {
-        //Comprobar si el anime existe
-        String select = "SELECT anime_id FROM animes WHERE name = ?";
-        PreparedStatement stmt = con.prepareStatement(select);
-        stmt.setString(1,o.getName().trim().toLowerCase());
-        ResultSet r = stmt.executeQuery();
-        if (r.next()) throw new ExistingObject("El anime " + o.getName() + " ya existe en la base de datos.");
-
+    public void create(Anime o, boolean copia) throws SQLException, ExistingObject {
         //Cojer el estudio i insertarlo a estudios si no existe
         MySQLStudioDAO studioDAO = new MySQLStudioDAO(con);
         int studio_id = studioDAO.insertStudio(new Studio(o.getStudios().getFirst().getName().trim().toLowerCase()));
@@ -43,8 +36,8 @@ public class MySQLAnimeDAO implements AnimeDAO {
         malStmt.setInt(1,o.getMal_id());
         ResultSet malRs = malStmt.executeQuery();
 
-        if (malRs.next()){
-            update(o);
+        if (malRs.next() && copia){
+            update(o,studio_id,genreIds);
         }
         else {
             //Cojer las id i introducir los datos a la bbdd
@@ -101,8 +94,31 @@ public class MySQLAnimeDAO implements AnimeDAO {
     }
 
     @Override
-    public void update(Anime o) throws SQLException {
+    public void update(Anime o, int studio_id, List<Integer> genres) throws SQLException {
+        //Cojer las id i introducir los datos a la bbdd
+        String insert = "CALL pro_anime_update(?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(insert);
+        pstmt.setInt(1,studio_id);
+        pstmt.setString(2,o.getName());
+        pstmt.setInt(3,o.getMal_id());
+        pstmt.setString(4,o.getStart_season().getSeason());
+        pstmt.setInt(5,o.getStart_season().getYear());
+        pstmt.setString(6,o.getStatus());
+        pstmt.setInt(7,o.getNum_episodes());
+        pstmt.execute();
 
+        //Cojer la id del anime que se acaba de introducir
+        String query = "SELECT anime_id FROM animes WHERE name = ?";
+        PreparedStatement pstmt2 = con.prepareStatement(query);
+        pstmt2.setString(1,o.getName());
+        ResultSet rs = pstmt2.executeQuery();
+        if (rs.next()){
+            int anime_id = rs.getInt("anime_id");
+
+            //Con la id del anime i la lista de id de generos llamar a la funcion para insertarlos
+            MySQLAnime_GenreDAO anime_genreDAO = new MySQLAnime_GenreDAO(con);
+            anime_genreDAO.insertAnime_Genre(anime_id,genres);
+        }
     }
 
     @Override
