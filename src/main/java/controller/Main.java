@@ -40,7 +40,7 @@ public class Main {
                 switch (opcion){
                     case 1:
                         MyAnimeListClient myAnimeListClient = new MyAnimeListClient();
-                        List<Anime> animes = myAnimeListClient.getTopAnimes();
+                        List<Anime> animes = myAnimeListClient.getTopAnimesFromEndopoint();
                         MySQLAnimeDAO animeDAO = new MySQLAnimeDAO(connection);
                         for (Anime a: animes) animeDAO.create(a);
                         break;
